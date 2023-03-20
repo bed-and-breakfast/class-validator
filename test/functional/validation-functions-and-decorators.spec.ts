@@ -4635,23 +4635,23 @@ describe('isInstance', () => {
   for (const myClass of [MyClass, MyClassWithFnTarget]) {
     const targetDesc = myClass.name === 'MyClassWithFnTarget' ? ' (function target)' : '';
 
-    it('should not fail if validator.validate said that its valid'+targetDesc, () => {
+    it('should not fail if validator.validate said that its valid' + targetDesc, () => {
       return checkValidValues(new myClass(), validValues);
     });
 
-    it('should fail if validator.validate said that its invalid'+targetDesc, () => {
+    it('should fail if validator.validate said that its invalid' + targetDesc, () => {
       return checkInvalidValues(new myClass(), invalidValues);
     });
 
-    it('should not fail if method in validator said that its valid'+targetDesc, () => {
+    it('should not fail if method in validator said that its valid' + targetDesc, () => {
       validValues.forEach(value => expect(isInstance(value, MySubClass)).toBeTruthy());
     });
 
-    it('should fail if method in validator said that its invalid'+targetDesc, () => {
+    it('should fail if method in validator said that its invalid' + targetDesc, () => {
       invalidValues.forEach(value => expect(isInstance(value, MySubClass)).toBeFalsy());
     });
 
-    it('should return error object with proper data'+targetDesc, () => {
+    it('should return error object with proper data' + targetDesc, () => {
       const validationType = 'isInstance';
       const message = 'someProperty must be an instance of MySubClass';
       return checkReturnedError(new myClass(), invalidValues, validationType, message);

@@ -19,15 +19,15 @@ export function IsInstance(
   targetType: (() => new (...args: any[]) => any) | (new (...args: any[]) => any),
   validationOptions?: ValidationOptions
 ): PropertyDecorator {
-  let targetTypeFn: (() => new (...args: any[]) => any);
+  let targetTypeFn: () => new (...args: any[]) => any;
 
   try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      class test extends (targetType as (new (...args: any[]) => any)) {}
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    class test extends (targetType as new (...args: any[]) => any) {}
 
-      targetTypeFn = () => targetType as new (...args: any[]) => any;
+    targetTypeFn = () => targetType as new (...args: any[]) => any;
   } catch {
-      targetTypeFn = targetType as (() => new (...args: any[]) => any);
+    targetTypeFn = targetType as () => new (...args: any[]) => any;
   }
 
   return ValidateBy(
