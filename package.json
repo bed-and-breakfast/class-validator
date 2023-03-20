@@ -6,6 +6,10 @@
   "license": "MIT",
   "sideEffects": false,
   "main": "./cjs/index.js",
+  "files": [
+    "/build",
+    "/src"
+  ],
   "module": "./esm5/index.js",
   "es2015": "./esm2015/index.js",
   "typings": "./types/index.d.ts",
