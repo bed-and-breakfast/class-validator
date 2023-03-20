@@ -4624,30 +4624,39 @@ describe('isInstance', () => {
     someProperty: MySubClass;
   }
 
+  class MyClassWithFnTarget {
+    @IsInstance(() => MySubClass)
+    someProperty: MySubClass;
+  }
+
   const validValues = [new MySubClass()];
   const invalidValues = [null, undefined, 15, 'something', new WrongSubClass(), (): null => null];
 
-  it('should not fail if validator.validate said that its valid', () => {
-    return checkValidValues(new MyClass(), validValues);
-  });
+  for (const myClass of [MyClass, MyClassWithFnTarget]) {
+    const targetDesc = myClass.name === 'MyClassWithFnTarget' ? ' (function target)' : '';
 
-  it('should fail if validator.validate said that its invalid', () => {
-    return checkInvalidValues(new MyClass(), invalidValues);
-  });
+    it('should not fail if validator.validate said that its valid'+targetDesc, () => {
+      return checkValidValues(new myClass(), validValues);
+    });
 
-  it('should not fail if method in validator said that its valid', () => {
-    validValues.forEach(value => expect(isInstance(value, MySubClass)).toBeTruthy());
-  });
+    it('should fail if validator.validate said that its invalid'+targetDesc, () => {
+      return checkInvalidValues(new myClass(), invalidValues);
+    });
 
-  it('should fail if method in validator said that its invalid', () => {
-    invalidValues.forEach(value => expect(isInstance(value, MySubClass)).toBeFalsy());
-  });
+    it('should not fail if method in validator said that its valid'+targetDesc, () => {
+      validValues.forEach(value => expect(isInstance(value, MySubClass)).toBeTruthy());
+    });
 
-  it('should return error object with proper data', () => {
-    const validationType = 'isInstance';
-    const message = 'someProperty must be an instance of MySubClass';
-    return checkReturnedError(new MyClass(), invalidValues, validationType, message);
-  });
+    it('should fail if method in validator said that its invalid'+targetDesc, () => {
+      invalidValues.forEach(value => expect(isInstance(value, MySubClass)).toBeFalsy());
+    });
+
+    it('should return error object with proper data'+targetDesc, () => {
+      const validationType = 'isInstance';
+      const message = 'someProperty must be an instance of MySubClass';
+      return checkReturnedError(new myClass(), invalidValues, validationType, message);
+    });
+  }
 });
 
 describe('IsStrongPassword', () => {

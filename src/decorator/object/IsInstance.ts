@@ -16,18 +16,29 @@ export function isInstance(object: unknown, targetTypeConstructor: new (...args:
  * Checks if the value is an instance of the specified object.
  */
 export function IsInstance(
-  targetType: new (...args: any[]) => any,
+  targetType: (() => new (...args: any[]) => any) | (new (...args: any[]) => any),
   validationOptions?: ValidationOptions
 ): PropertyDecorator {
+  let targetTypeFn: (() => new (...args: any[]) => any);
+
+  try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      class test extends (targetType as (new (...args: any[]) => any)) {}
+
+      targetTypeFn = () => targetType as new (...args: any[]) => any;
+  } catch {
+      targetTypeFn = targetType as (() => new (...args: any[]) => any);
+  }
+
   return ValidateBy(
     {
       name: IS_INSTANCE,
-      constraints: [targetType],
+      constraints: [targetTypeFn],
       validator: {
-        validate: (value, args): boolean => isInstance(value, args?.constraints[0]),
+        validate: (value, args): boolean => isInstance(value, args?.constraints[0]()),
         defaultMessage: buildMessage((eachPrefix, args) => {
           if (args?.constraints[0]) {
-            return eachPrefix + `$property must be an instance of ${args?.constraints[0].name as string}`;
+            return eachPrefix + `$property must be an instance of ${args?.constraints[0]().name as string}`;
           } else {
             return eachPrefix + `${IS_INSTANCE} decorator expects and object as value, but got falsy value.`;
           }
