@@ -1,11 +1,11 @@
 {
   "name": "@bed-and-breakfast/class-validator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Decorator-based property validation for classes.",
   "author": "TypeStack contributors",
   "license": "MIT",
   "sideEffects": false,
-  "main": "./cjs/index.js",
+  "main": "build/cjs/index.js",
   "files": [
     "/build",
     "/src"
