@@ -2,7 +2,7 @@ name: CD
 on:
   push:
     branches:
-      - 'bbeu'
+      - bbeu
 jobs:
   publish:
     name: Publish to NPM
