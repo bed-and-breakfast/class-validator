@@ -1,6 +1,6 @@
 {
   "name": "@bed-and-breakfast/class-validator",
-  "version": "0.14.0/bed-and-breakfast",
+  "version": "0.14.0-bed-and-breakfast",
   "description": "Decorator-based property validation for classes.",
   "author": "TypeStack contributors",
   "license": "MIT",
