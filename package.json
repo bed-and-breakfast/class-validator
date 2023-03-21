@@ -1,6 +1,6 @@
 {
   "name": "@bed-and-breakfast/class-validator",
-  "version": "0.4.0",
+  "version": "0.14.0/bed-and-breakfast",
   "description": "Decorator-based property validation for classes.",
   "author": "TypeStack contributors",
   "license": "MIT",
@@ -9,6 +9,10 @@
   "module": "./esm5/index.js",
   "es2015": "./esm2015/index.js",
   "typings": "./types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bed-and-breakfast/class-validator"
+  },
   "tags": [
     "validator",
     "validation",
